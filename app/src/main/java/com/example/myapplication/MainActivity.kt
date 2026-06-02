@@ -57,3 +57,80 @@ fun CalculadoraIMCApp() {
     }
 }
 
+
+@Composable
+fun PantallaIngreso(navController: androidx.navigation.NavController) {
+    var nombre by remember { mutableStateOf("") }
+    var peso by remember { mutableStateOf("") }
+    var altura by remember { mutableStateOf("") }
+    var error by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text("Calculadora de IMC", style = MaterialTheme.typography.headlineMedium)
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        TextField(
+            value = nombre,
+            onValueChange = { nombre = it },
+            label = { Text("Nombre") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        TextField(
+            value = peso,
+            onValueChange = { peso = it },
+            label = { Text("Peso en kg") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        TextField(
+            value = altura,
+            onValueChange = { altura = it },
+            label = { Text("Altura en metros") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        if (error) {
+            Text(
+                text = "Por favor, ingresa valores válidos",
+                color = Color.Red
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+
+        Button(
+            onClick = {
+                val pesoValido = peso.toFloatOrNull()
+                val alturaValida = altura.toFloatOrNull()
+
+                if (pesoValido != null && alturaValida != null &&
+                    pesoValido > 0 && alturaValida > 0
+                ) {
+                    val imc = pesoValido / (alturaValida * alturaValida)
+                    val nombreUrl = URLEncoder.encode(nombre, StandardCharsets.UTF_8.toString())
+
+                    error = false
+                    navController.navigate("resultado/$nombreUrl/$imc")
+                } else {
+                    error = true
+                }
+            }
+        ) {
+            Text("Calcular")
+        }
+    }
+}
+
