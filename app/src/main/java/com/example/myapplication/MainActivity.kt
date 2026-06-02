@@ -134,3 +134,31 @@ fun PantallaIngreso(navController: androidx.navigation.NavController) {
     }
 }
 
+@Composable
+fun PantallaResultado(
+    nombre: String,
+    imc: Float,
+    onVolver: () -> Unit
+) {
+    val categoria: String
+    val colorCategoria: Color
+
+    when {
+        imc < 18.5 -> {
+            categoria = "Bajo peso"
+            colorCategoria = Color.Red
+        }
+        imc < 25.0 -> {
+            categoria = "Peso normal"
+            colorCategoria = Color.Green
+        }
+        imc < 30.0 -> {
+            categoria = "Sobrepeso"
+            colorCategoria = Color(0xFFFF9800)
+        }
+        else -> {
+            categoria = "Obesidad"
+            colorCategoria = Color.Red
+        }
+    }
+
