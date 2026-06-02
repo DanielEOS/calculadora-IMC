@@ -162,3 +162,34 @@ fun PantallaResultado(
         }
     }
 
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text("Hola $nombre, tu resultado es:")
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            text = "IMC: %.1f".format(imc),
+            style = MaterialTheme.typography.headlineMedium
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            text = categoria,
+            color = colorCategoria,
+            style = MaterialTheme.typography.headlineSmall
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(onClick = onVolver) {
+            Text("Volver")
+        }
+    }
+}
